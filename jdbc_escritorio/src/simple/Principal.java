@@ -1,29 +1,28 @@
 package simple;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Principal {
-    
+
     public static void main(String[] args) {
         System.out.println("[..] simple.Principal.main() ");
         try {
-            
             crearBase();
             Connection conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbalumnos", "educacion", "educacion");
+            consutlarDato(conectar);
             crearTabla(conectar);
+            consutlarDato(conectar);
             insertarDato(conectar);
             consutlarDato(conectar);
             borrarDato(conectar);
+            consutlarDato(conectar);
             destruirBase();
-            
         } catch (Exception ex) {
             System.out.println("[ERROR] simple.Principal.main() " + ex.getMessage());
         }
         System.out.println("[OK] simple.Principal.main() ");
     }
-    
+
     public static void crearBase() {
         System.out.println("[..] simple.Principal.crearBase()");
         try {
@@ -36,7 +35,7 @@ public class Principal {
         }
         System.out.println("[OK] simple.Principal.crearBase()");
     }
-    
+
     public static void crearTabla(Connection conectar) {
         System.out.println("[..] simple.Principal.crearTabla()");
         PreparedStatement sentencia;
@@ -56,7 +55,7 @@ public class Principal {
         }
         System.out.println("[OK] simple.Principal.crearTabla()");
     }
-    
+
     public static void insertarDato(Connection conectar) {
         System.out.println("[..] simple.Principal.insertarBase()");
         String insertarDatos = " INSERT INTO alumnos "
@@ -76,13 +75,32 @@ public class Principal {
         }
         System.out.println("[OK] simple.Principal.insertarBase()");
     }
-    
+
     public static void consutlarDato(Connection conectar) {
         System.out.println("[..] simple.Principal.consutlarBase()");
-        
+        String eliminarDatos = " SELECT * FROM alumnos ";
+        PreparedStatement sentencia;
+        try {
+            sentencia = conectar.prepareStatement(eliminarDatos);
+            ResultSet cursorResultado = sentencia.executeQuery();
+            while (cursorResultado.next()) {
+                System.out.println("     { "
+                        + cursorResultado.getString(1)
+                        + " , "
+                        + cursorResultado.getString(2)
+                        + " , "
+                        + cursorResultado.getString(3)
+                        + " , "
+                        + cursorResultado.getString(4)
+                        + " }");
+            }
+        } catch (Exception ex) {
+            System.out.println("[ERROR] simple.Principal.consutlarBase() " + ex.getMessage());
+        }
+
         System.out.println("[OK] simple.Principal.consutlarBase()");
     }
-    
+
     public static void borrarDato(Connection conectar) {
         System.out.println("[..] simple.Principal.borrarBase()");
         String eliminarDatos = " DELETE FROM alumnos ";
@@ -95,7 +113,7 @@ public class Principal {
         }
         System.out.println("[OK] simple.Principal.borrarBase()");
     }
-    
+
     public static void destruirBase() {
         System.out.println("[..] simple.Principal.destruirBase()");
         try {
@@ -106,8 +124,8 @@ public class Principal {
         } catch (SQLException ex) {
             System.out.println("[ERROR] simple.Principal.destruirBase() " + ex.getMessage());
         }
-        
+
         System.out.println("[OK] simple.Principal.destruirBase()");
     }
-    
+
 }
