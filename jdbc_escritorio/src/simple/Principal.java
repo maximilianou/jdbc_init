@@ -14,9 +14,9 @@ public class Principal {
             consutlarDato(conectar);
             insertarDato(conectar);
             consutlarDato(conectar);
-            borrarDato(conectar);
-            consutlarDato(conectar);
-            destruirBase();
+//            borrarDato(conectar);
+//            consutlarDato(conectar);
+//            destruirBase();
         } catch (Exception ex) {
             System.out.println("[ERROR] simple.Principal.main() " + ex.getMessage());
         }
@@ -124,8 +124,6 @@ public class Principal {
         } catch (SQLException ex) {
             System.out.println("[ERROR] simple.Principal.destruirBase() " + ex.getMessage());
         }
-
         System.out.println("[OK] simple.Principal.destruirBase()");
     }
-
 }
