@@ -1,4 +1,3 @@
-
 package simple;
 
 import java.sql.*;
@@ -7,41 +6,62 @@ public class Principal {
 
     public static void main(String[] args) {
         System.out.println("[..] simple.Principal.main() ");
+        Connection conectar = null;
         try {
             crearBase();
-            Connection conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbalumnos", "educacion", "educacion");
+            conectar = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/dbalumnos",
+                    "educacion",
+                    "educacion");
             consutlarDato(conectar);
             crearTabla(conectar);
             consutlarDato(conectar);
             insertarDato(conectar);
             consutlarDato(conectar);
-            borrarDato(conectar);
-            consutlarDato(conectar);
-            destruirBase();
+//            borrarDato(conectar);
+//            consutlarDato(conectar);
+//            destruirBase();
         } catch (Exception ex) {
-            System.out.println("[ERROR] simple.Principal.main() " + ex.getMessage());
+            System.out.println("[ERROR] simple.Principal.main() "
+                    + ex.getMessage());
+        } finally {
+            try {
+                conectar.close();
+            } catch (SQLException ex) {
+                System.out.println("[ERROR] simple.Principal.main() "
+                        + ex.getMessage());
+            }
         }
         System.out.println("[OK] simple.Principal.main() ");
     }
 
-    public static void crearBase() {
+    public static void crearBase() throws SQLException {
         System.out.println("[..] simple.Principal.crearBase()");
+        Connection conectar = null;
         try {
-            Connection conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "educacion", "educacion");
-            String crearBaseDeDatos = " CREATE DATABASE IF NOT EXISTS dbalumnos DEFAULT CHARACTER SET utf8 COLLATE utf8_bin; ";
+            conectar = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/mysql",
+                    "educacion",
+                    "educacion");
+            String crearBaseDeDatos = " CREATE DATABASE IF NOT EXISTS dbalumnos "
+                    + "  DEFAULT CHARACTER SET utf8 COLLATE utf8_bin; ";
             PreparedStatement sentencia = conectar.prepareStatement(crearBaseDeDatos);
             sentencia.execute();
         } catch (Exception ex) {
-            System.out.println("[ERROR] simple.Principal.crearBase() " + ex.getMessage());
+            System.out.println("[ERROR] simple.Principal.crearBase() "
+                    + ex.getMessage());
+        } finally {
+            conectar.close();
         }
         System.out.println("[OK] simple.Principal.crearBase()");
     }
 
-    public static void crearTabla(Connection conectar) {
+    public static void crearTabla(Connection conectar) throws SQLException {
         System.out.println("[..] simple.Principal.crearTabla()");
         PreparedStatement sentencia;
         try {
-            String crearTablaAlumnos = " CREATE TABLE IF NOT EXISTS alumnos ( "
+            String crearTablaAlumnos = 
+                      " CREATE TABLE IF NOT EXISTS alumnos ( "
                     + " alu_id int  (11) NOT NULL AUTO_INCREMENT ,  "
                     + " alu_email varchar(255) COLLATE utf8_bin NOT NULL , "
                     + " alu_nombre varchar(255) COLLATE utf8_bin DEFAULT NULL , "
@@ -57,7 +77,7 @@ public class Principal {
         System.out.println("[OK] simple.Principal.crearTabla()");
     }
 
-    public static void insertarDato(Connection conectar) {
+    public static void insertarDato(Connection conectar) throws SQLException {
         System.out.println("[..] simple.Principal.insertarBase()");
         String insertarDatos = " INSERT INTO alumnos "
                 + " (alu_email, alu_nombre, alu_apellido) "
@@ -72,12 +92,13 @@ public class Principal {
             sentencia = conectar.prepareStatement(insertarDatos);
             sentencia.execute();
         } catch (Exception ex) {
-            System.out.println("[ERROR] simple.Principal.insertarBase() " + ex.getMessage());
+            System.out.println("[ERROR] simple.Principal.insertarBase() " 
+                    + ex.getMessage());
         }
         System.out.println("[OK] simple.Principal.insertarBase()");
     }
 
-    public static void consutlarDato(Connection conectar) {
+    public static void consutlarDato(Connection conectar) throws SQLException {
         System.out.println("[..] simple.Principal.consutlarBase()");
         String eliminarDatos = " SELECT * FROM alumnos ";
         PreparedStatement sentencia;
@@ -96,13 +117,13 @@ public class Principal {
                         + " }");
             }
         } catch (Exception ex) {
-            System.out.println("[ERROR] simple.Principal.consutlarBase() " + ex.getMessage());
+            System.out.println("[ERROR] simple.Principal.consutlarBase() " 
+                    + ex.getMessage());
         }
-
         System.out.println("[OK] simple.Principal.consutlarBase()");
     }
 
-    public static void borrarDato(Connection conectar) {
+    public static void borrarDato(Connection conectar) throws SQLException {
         System.out.println("[..] simple.Principal.borrarBase()");
         String eliminarDatos = " DELETE FROM alumnos ";
         PreparedStatement sentencia;
@@ -110,22 +131,29 @@ public class Principal {
             sentencia = conectar.prepareStatement(eliminarDatos);
             sentencia.execute();
         } catch (Exception ex) {
-            System.out.println("[ERROR] simple.Principal.borrarBase() " + ex.getMessage());
+            System.out.println("[ERROR] simple.Principal.borrarBase() " 
+                    + ex.getMessage());
         }
         System.out.println("[OK] simple.Principal.borrarBase()");
     }
 
-    public static void destruirBase() {
+    public static void destruirBase() throws SQLException {
         System.out.println("[..] simple.Principal.destruirBase()");
+        Connection conectar = null;
         try {
-            Connection conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "educacion", "educacion");
+            conectar = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/mysql", 
+                    "educacion", 
+                    "educacion");
             String crearBaseDeDatos = " DROP DATABASE IF EXISTS dbalumnos; ";
             PreparedStatement sentencia = conectar.prepareStatement(crearBaseDeDatos);
             sentencia.execute();
         } catch (SQLException ex) {
-            System.out.println("[ERROR] simple.Principal.destruirBase() " + ex.getMessage());
+            System.out.println("[ERROR] simple.Principal.destruirBase() " 
+                    + ex.getMessage());
+        } finally {
+            conectar.close();
         }
         System.out.println("[OK] simple.Principal.destruirBase()");
     }
-    
 }
