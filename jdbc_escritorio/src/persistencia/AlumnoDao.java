@@ -9,7 +9,10 @@ public class AlumnoDao {
         ArrayList<Alumno> listado = new ArrayList();
         Connection conectar = null;
         try {
-            conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbalumnos", "educacion", "educacion");
+            conectar = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/dbalumnos",
+                    "educacion",
+                    "educacion");
             String eliminarDatos = " SELECT * FROM alumnos ";
             PreparedStatement sentencia = conectar.prepareStatement(eliminarDatos);
             ResultSet cursorResultado = sentencia.executeQuery();
@@ -30,7 +33,10 @@ public class AlumnoDao {
     public static void insertar(Alumno alu) throws Exception {
         Connection conectar = null;
         try {
-            conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbalumnos", "educacion", "educacion");
+            conectar = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/dbalumnos",
+                    "educacion",
+                    "educacion");
             String insertarDatos = " INSERT INTO alumnos "
                     + " ( alu_email, alu_nombre, alu_apellido ) "
                     + " VALUES "
@@ -48,7 +54,10 @@ public class AlumnoDao {
     public static void eliminar(Alumno alu) throws Exception {
         Connection conectar = null;
         try {
-            conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbalumnos", "educacion", "educacion");
+            conectar = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/dbalumnos",
+                    "educacion",
+                    "educacion");
             String eliminarDatos = " DELETE FROM alumnos "
                     + " WHERE alu_id = ? ";
             PreparedStatement sentencia = conectar.prepareStatement(eliminarDatos);
