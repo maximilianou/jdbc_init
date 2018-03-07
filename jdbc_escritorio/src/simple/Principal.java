@@ -18,9 +18,9 @@ public class Principal {
             consutlarDato(conectar);
             insertarDato(conectar);
             consutlarDato(conectar);
-//            borrarDato(conectar);
-//            consutlarDato(conectar);
-//            destruirBase();
+            borrarDato(conectar);
+            consutlarDato(conectar);
+            destruirBase();
         } catch (Exception ex) {
             System.out.println("[ERROR] simple.Principal.main() "
                     + ex.getMessage());
@@ -100,10 +100,10 @@ public class Principal {
 
     public static void consutlarDato(Connection conectar) throws SQLException {
         System.out.println("[..] simple.Principal.consutlarBase()");
-        String eliminarDatos = " SELECT * FROM alumnos ";
+        String consutlarDatos = " SELECT * FROM alumnos ";
         PreparedStatement sentencia;
         try {
-            sentencia = conectar.prepareStatement(eliminarDatos);
+            sentencia = conectar.prepareStatement(consutlarDatos);
             ResultSet cursorResultado = sentencia.executeQuery();
             while (cursorResultado.next()) {
                 System.out.println("     { "
