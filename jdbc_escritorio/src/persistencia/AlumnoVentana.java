@@ -36,12 +36,6 @@ public class AlumnoVentana extends javax.swing.JFrame {
 
         txtEmail.setToolTipText("alberto@gmail.com");
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Email");
 
         jLabel2.setText("Nombre");
@@ -148,10 +142,6 @@ public class AlumnoVentana extends javax.swing.JFrame {
         }
         refrescar();
     }//GEN-LAST:event_btnInsertarActionPerformed
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
